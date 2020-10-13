@@ -9,7 +9,7 @@ app.use(morgan('dev'))
 //routes
 app.get('/', (req, res, next) => {
     res.json({
-        message: 'success'
+        message: 'success, app listen to port 3000'
     })
 })
 
