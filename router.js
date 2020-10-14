@@ -72,4 +72,21 @@ router.put('/homeworks/:id', async(req, res) => {
     }
 })
 
+//@desc Delete a homework
+//@route DELETE /api/homeworks/:id
+router.delete('/homeworks/:id', async(req, res) => {
+    const homeworks = await Homework.findById(req.params.id)
+
+    if (homeworks) {
+        await homeworks.remove()
+        res.json({
+            message: 'homework removed'
+        })
+    } else {
+        res.status(404).json({
+            message: 'homework not found'
+        })
+    }
+})
+
 export default router
