@@ -7,19 +7,26 @@ const router = express.Router()
 //@route POST /api/homeworks
 router.post('/homeworks', async(req, res) => {
     try {
-        const { course, title, due_date, status } = req.body
+        const {
+            course,
+            title,
+            due_date,
+            status,
+        } = req.body
+
         const homework = new Homework({
             course,
             title,
             due_date,
-            status
+            status,
         })
-        const createdHomework = await homework.save({})
+        const createdHomework = await homework.save()
 
         res.status(201).json(createdHomework)
 
     } catch (err) {
         res.status(500).json({ error: 'Database creation failed' })
+        throw err
     }
 })
 
@@ -27,9 +34,9 @@ router.post('/homeworks', async(req, res) => {
 //@route GET /api/homeworks
 
 router.get('/homeworks', async(req, res) => {
-    const homeworks = await Homework.find({})
-    if (homeworks) {
-        res.json(homeworks)
+    const homework = await Homework.find({})
+    if (homework) {
+        res.json(homework)
     } else {
         res.status(404).json({
             message: "Homework not found"
@@ -40,9 +47,9 @@ router.get('/homeworks', async(req, res) => {
 //@desc Get a homeworks
 //@route GET /api/homeworks/:id
 router.get('/homeworks', async(req, res) => {
-    const homeworks = await Homework.findById(req.params.Id)
-    if (homeworks) {
-        res.json(homeworks)
+    const homework = await Homework.findById(req.params.Id)
+    if (homework) {
+        res.json(homework)
     } else {
         res.status(404).json({
             message: "Homework not found"
@@ -56,14 +63,14 @@ router.get('/homeworks', async(req, res) => {
 
 router.put('/homeworks/:id', async(req, res) => {
     const { course, title, due_date, status } = req.body
-    const homeworks = await Homework.findById(req.params.Id)
+    const homework = await Homework.findById(req.params.Id)
 
-    if (homeworks) {
-        homeworks.course = course
-        homeworks.title = title
-        homeworks.due_date = due_date
-        homeworks.status = status
-        const updateHomework = await homeworks.save()
+    if (homework) {
+        homework.course = course
+        homework.title = title
+        homework.due_date = due_date
+        homework.status = status
+        const updateHomework = await homework.save()
         res.json(updateHomework)
     } else {
         res.status(404).json({
@@ -75,16 +82,32 @@ router.put('/homeworks/:id', async(req, res) => {
 //@desc Delete a homework
 //@route DELETE /api/homeworks/:id
 router.delete('/homeworks/:id', async(req, res) => {
-    const homeworks = await Homework.findById(req.params.id)
+    const homework = await Homework.findById(req.params.id)
 
-    if (homeworks) {
-        await homeworks.remove()
+    if (homework) {
+        await homework.remove()
         res.json({
             message: 'homework removed'
         })
     } else {
         res.status(404).json({
             message: 'homework not found'
+        })
+    }
+})
+
+//@Desc Delete all homeworks
+//@route DELETE /api/homeworks
+router.delete('/homeworks', async(req, res) => {
+    const homework = await Homework.find({})
+    if (homework) {
+        await homework.remove()
+        res.json({
+            message: 'all homework removed'
+        })
+    } else {
+        res.status(404).json({
+            message: "Homework not found"
         })
     }
 })

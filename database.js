@@ -1,4 +1,4 @@
-import mongoose from 'mongoose'
+import mongoose from 'mongoose';
 
 const homeworkSchema = mongoose.Schema({
     course: {
@@ -16,11 +16,11 @@ const homeworkSchema = mongoose.Schema({
     status: {
         type: String,
         required: true,
-    }
+    },
 }, {
-    timestamps: true
-})
+    timestamps: true,
+});
 
-const Homework = mongoose.model('Homework', homeworkSchema)
+const Homework = mongoose.model('Homework', homeworkSchema);
 
-export default Homework
+export default Homework;
