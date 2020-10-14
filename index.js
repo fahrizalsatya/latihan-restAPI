@@ -24,7 +24,7 @@ mongoose.connect(process.env.MONGODB_URI, {
 //     console.log('Connect to failed ' + err)
 // }))
 
-//middleware
+//middlewares
 app.use(morgan('dev'))
 app.use(express.json())
 
@@ -32,7 +32,7 @@ app.use(express.json())
 //routes
 app.get('/', (req, res, next) => {
     res.json({
-        message: 'success, app listen to port 3000'
+        message: `success, app listen to port ${PORT}`
     })
 })
 

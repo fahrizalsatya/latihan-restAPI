@@ -1,6 +1,6 @@
 import mongoose from 'mongoose'
 
-const homeWorkSchema = mongoose.Schema({
+const homeworkSchema = mongoose.Schema({
     course: {
         type: String,
         required: true,
@@ -21,6 +21,6 @@ const homeWorkSchema = mongoose.Schema({
     timestamps: true
 })
 
-const Homework = mongoose.model('Homework', homeWorkSchema)
+const Homework = mongoose.model('Homework', homeworkSchema)
 
 export default Homework
