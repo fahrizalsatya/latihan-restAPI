@@ -1,44 +1,35 @@
-import dotenv from 'dotenv'
-dotenv.config()
-import express from 'express'
-import morgan from 'morgan'
-import mongoose from 'mongoose'
-import router from './router.js'
-const app = express()
+import dotenv from 'dotenv';
+dotenv.config();
 
-//connect to DB
+import express from 'express';
+import mongoose from 'mongoose';
+import morgan from 'morgan';
+import router from './router.js';
+
+const app = express();
+
+// Connect to DB
 mongoose.connect(process.env.MONGODB_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
 }, () => {
-    console.log('Connect to DB success')
-})
+    console.log('Connect to database success');
+});
 
-//, () => {
-//     console.log('Connect to DB success')
-// })
+// Middlewares
+app.use(express.json());
+app.use(morgan('dev'));
 
-// .then(() => {
-//     console.log('Connect to DB success')
-// }).catch(err => {
-//     console.log('Connect to failed ' + err)
-// }))
-
-//middlewares
-app.use(morgan('dev'))
-app.use(express.json())
-
-
-//routes
+// Routes
 app.get('/', (req, res, next) => {
     res.json({
-        message: `success, app listen to port ${PORT}`
-    })
-})
+        message: 'success',
+    });
+});
 
-app.use('/api', router) //http://localhost:3000/api/homeworks
+app.use('/api', router);
 
 const PORT = process.env.PORT || 3000
 app.listen(PORT, () => {
-    console.log(`App listens to port ${PORT}`)
-})
+    console.log(`App listens to port ${PORT}`);
+});
